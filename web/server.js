@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
       <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <title>Visit Counter</title>
+        <title>Thank you for visiting Sandeep Hegde's Counter</title>
         <style>
           body {
             font-family: Arial, sans-serif;

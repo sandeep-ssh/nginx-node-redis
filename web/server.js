@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <div class="card">
-          <h1>🌍 Welcome to Request Counter</h1>
+          <h1>🌍 Thank you for visiting Sandeep's Counter App</h1>
           <p>Running on: <span class="highlight">${os.hostname()}</span></p>
           <p>Total Visits: <span class="highlight">${numVisits}</span></p>
         </div>

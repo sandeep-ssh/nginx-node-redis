@@ -1,9 +1,11 @@
-FROM node:21
+FROM node:20-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY ./server.js ./
+COPY package*.json ./
+RUN npm install --production
 
-CMD ["npm","start"]
+COPY . .
+
+EXPOSE 5000
+CMD ["npm", "start"]

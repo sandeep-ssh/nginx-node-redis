@@ -1,25 +1,22 @@
 const os = require('os');
 const express = require('express');
-const app = express();
 const redis = require('redis');
 
-// Create Redis client
+const app = express();
+
 const redisClient = redis.createClient({
   host: 'redis',
   port: 6379
 });
 
-app.get('/', function (req, res) {
-  redisClient.get('numVisits', function (err, numVisits) {
-    let numVisitsToDisplay = parseInt(numVisits) + 1;
-    if (isNaN(numVisitsToDisplay)) {
-      numVisitsToDisplay = 1;
-    }
+redisClient.on('error', (err) => {
+  console.error('Redis error:', err);
+});
 
-    // Update Redis
-    redisClient.set('numVisits', numVisitsToDisplay);
+app.get('/', (req, res) => {
+  redisClient.incr('numVisits', (err, numVisits) => {
+    if (err) return res.status(500).send('Redis error');
 
-    // Send attractive HTML response
     res.send(`
       <!DOCTYPE html>
       <html lang="en">
@@ -41,14 +38,8 @@ app.get('/', function (req, res) {
             display: inline-block;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
           }
-          h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-          }
-          p {
-            font-size: 1.3rem;
-            margin: 10px 0;
-          }
+          h1 { font-size: 2.5rem; }
+          p { font-size: 1.3rem; }
           .highlight {
             font-weight: bold;
             font-size: 1.5rem;
@@ -60,7 +51,7 @@ app.get('/', function (req, res) {
         <div class="card">
           <h1>🌍 Welcome to Request Counter</h1>
           <p>Running on: <span class="highlight">${os.hostname()}</span></p>
-          <p>Total Visits: <span class="highlight">${numVisitsToDisplay}</span></p>
+          <p>Total Visits: <span class="highlight">${numVisits}</span></p>
         </div>
       </body>
       </html>
@@ -68,6 +59,6 @@ app.get('/', function (req, res) {
   });
 });
 
-app.listen(5000, function () {
+app.listen(5000, () => {
   console.log('🌐 Web application is listening on port 5000');
 });

@@ -223,7 +223,8 @@ This project is intentionally kept simple to highlight core DevOps principles. H
 ## Why This Matters
 These enhancements demonstrate how a simple demo can evolve into a production-grade cloud platform, mirroring how real-world systems grow over time.
 
-This roadmap shows not just what works today, but how to scale responsibly tomorrow
+*This roadmap shows not just what works today, but how to scale responsibly tomorrow*
+
 ---
 
 ## 🌟 Why This Project Stands Out
